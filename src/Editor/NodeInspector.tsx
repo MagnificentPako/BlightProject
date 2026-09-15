@@ -17,8 +17,7 @@ import {
 } from "@radix-ui/themes"
 import { Cross2Icon, LockClosedIcon, LockOpen1Icon, TrashIcon, PlusIcon } from "@radix-ui/react-icons"
 
-// Adjust this import to wherever AtlasNodeData actually lives in your project.
-import type { AtlasNodeData } from "./atlasTypes"
+import type { AtlasNodeData } from "./AtlasData"
 
 interface NodeInspectorProps {
   node: Node<AtlasNodeData>

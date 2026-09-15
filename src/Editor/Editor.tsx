@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AtlasNode } from "./AtlasNode";
-import { useNodesState, useEdgesState, type Connection, addEdge, ReactFlow, Background, Controls, Panel, MiniMap, useReactFlow } from "@xyflow/react";
+import { useNodesState, useEdgesState, type Connection, type Node, addEdge, ReactFlow, Background, Controls, Panel, MiniMap, useReactFlow } from "@xyflow/react";
 import type { AtlasNodeData } from "./AtlasData";
+
+type AtlasFlowNode = Node<AtlasNodeData, "atlasNode">;
 import { NodeInspector } from "./NodeInspector";
 import '@xyflow/react/dist/style.css'
 import { AtlasBackdrop } from "./AtlasBackdrop";
@@ -18,7 +20,7 @@ export function Editor() {
         return saved ? JSON.parse(saved) : { flowNodes: [], flowEdges: [] };
     })();
 
-    const [nodes, setNodes, onNodesChange] = useNodesState(seed.flowNodes);
+    const [nodes, setNodes, onNodesChange] = useNodesState<AtlasFlowNode>(seed.flowNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(seed.flowEdges);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -40,11 +42,11 @@ export function Editor() {
     const addNode = useCallback(
         (position: { x: number; y: number }) => {
             const id = crypto.randomUUID();
-            const newNode = {
+            const newNode: AtlasFlowNode = {
                 id,
                 type: "atlasNode",
                 position,
-                data: { id, label: `Node ${id}`, locked: false, collectionItem: "", tithe: "", empowermentUniques: [], points: 0, tier: 1, isUnique: false, isPenultimate: false, isWeakened: false, isEmpowered: false, isContended: false, containsHiddenFractal: false, containsPublicFractal: false },
+                data: { id, x: position.x, y: position.y, label: `Node ${id}`, locked: false, collectionItem: "", tithe: "", empowermentUniques: [], points: 0, tier: 1, isUnique: false, isPenultimate: false, isWeakened: false, isEmpowered: false, isContended: false, containsHiddenFractal: false, containsPublicFractal: false },
                 draggable: true
             };
             setNodes((nds) => [...nds, newNode]);

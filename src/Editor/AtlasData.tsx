@@ -1,4 +1,4 @@
-export interface AtlasNodeData {
+export interface AtlasNodeData extends Record<string, unknown> {
     id: string;
     x: number;
     y: number;
