@@ -71,19 +71,25 @@ export function NodeInspector({ node, onChange, onClose }: NodeInspectorProps) {
   }
 
   return (
-    <Box width="300px" style={{ background: "var(--color-panel-solid)", height: "100%" }}>
+    <Box width="300px" style={{ background: "var(--color-panel-solid)", height: "100%", flexShrink: 0 }}>
       <ScrollArea style={{ height: "100%" }}>
         <Flex direction="column" gap="4" p="4">
           {/* Header: name, id, lock, close */}
           <Flex justify="between" align="start">
-            <Box style={{ flex: 1 }}>
+            <Box style={{ flex: 1, minWidth: 0 }}>
               <TextField.Root
                 value={data.label}
                 onChange={(e) => update("label", e.target.value)}
                 placeholder="Node name"
                 size="3"
               />
-              <Text as="div" size="1" color="gray" mt="1" style={{ fontFamily: "var(--code-font-family)" }}>
+              <Text
+                as="div"
+                size="1"
+                color="gray"
+                mt="1"
+                style={{ fontFamily: "var(--code-font-family)", overflowWrap: "anywhere" }}
+              >
                 {data.id}
               </Text>
             </Box>

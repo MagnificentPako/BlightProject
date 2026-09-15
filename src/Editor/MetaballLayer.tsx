@@ -26,6 +26,17 @@ const WOBBLE_OCTAVES = 3;
 const WOBBLE_SEED = 5;
 const WOBBLE_DISPLACEMENT_SCALE = 40;
 
+// Surface translucency variation: a second, coarser noise field remapped to
+// an alpha mask and multiplied over the blob shape, so opacity drifts across
+// the merged surface like light through water instead of one flat fill.
+// "turbulence" (vs. "fractalNoise") gives it a more veined, glinting quality
+// than plain water, closer to a magical shimmer. Static, like the edge wobble.
+const CAUSTIC_BASE_FREQUENCY = 0.015;
+const CAUSTIC_OCTAVES = 2;
+const CAUSTIC_SEED = 11;
+const CAUSTIC_ALPHA_MIN = 0.55;
+const CAUSTIC_ALPHA_MAX = 1;
+
 export function MetaballLayer() {
     const nodes = useNodes<Node<AtlasNodeData>>();
     const { x, y, zoom } = useViewport();
@@ -64,9 +75,26 @@ export function MetaballLayer() {
                         yChannelSelector="G"
                         result="mask"
                     />
-                    <feComponentTransfer in="mask">
+                    <feComponentTransfer in="mask" result="shape">
                         <feFuncA type="linear" slope={OPACITY_SLOPE} intercept="0" />
                     </feComponentTransfer>
+
+                    <feTurbulence
+                        type="turbulence"
+                        baseFrequency={CAUSTIC_BASE_FREQUENCY}
+                        numOctaves={CAUSTIC_OCTAVES}
+                        seed={CAUSTIC_SEED}
+                        result="causticNoise"
+                    />
+                    <feColorMatrix in="causticNoise" type="luminanceToAlpha" result="causticAlpha" />
+                    <feComponentTransfer in="causticAlpha" result="causticMask">
+                        <feFuncA
+                            type="linear"
+                            slope={CAUSTIC_ALPHA_MAX - CAUSTIC_ALPHA_MIN}
+                            intercept={CAUSTIC_ALPHA_MIN}
+                        />
+                    </feComponentTransfer>
+                    <feComposite in="shape" in2="causticMask" operator="in" />
                 </filter>
             </defs>
             <g transform={`translate(${x}, ${y}) scale(${zoom})`} filter="url(#metaball-goo)">
