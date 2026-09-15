@@ -16,6 +16,9 @@ export interface AtlasNodeData extends Record<string, unknown> {
     isContended: boolean;
     containsHiddenFractal: boolean;
     containsPublicFractal: boolean;
+    hasMetaballEffect?: boolean;
+    metaballColor?: string;
+    metaballRadius?: number;
 }
 
 export interface AtlasLinkData {

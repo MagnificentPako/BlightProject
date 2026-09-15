@@ -7,6 +7,7 @@ type AtlasFlowNode = Node<AtlasNodeData, "atlasNode">;
 import { NodeInspector } from "./NodeInspector";
 import '@xyflow/react/dist/style.css'
 import { AtlasBackdrop } from "./AtlasBackdrop";
+import { MetaballLayer } from "./MetaballLayer";
 import { Button, Flex, Separator } from "@radix-ui/themes";
 
 const nodeTypes = { atlasNode: AtlasNode };
@@ -46,7 +47,7 @@ export function Editor() {
                 id,
                 type: "atlasNode",
                 position,
-                data: { id, x: position.x, y: position.y, label: `Node ${id}`, locked: false, collectionItem: "", tithe: "", empowermentUniques: [], points: 0, tier: 1, isUnique: false, isPenultimate: false, isWeakened: false, isEmpowered: false, isContended: false, containsHiddenFractal: false, containsPublicFractal: false },
+                data: { id, x: position.x, y: position.y, label: `Node ${id}`, locked: false, collectionItem: "", tithe: "", empowermentUniques: [], points: 0, tier: 1, isUnique: false, isPenultimate: false, isWeakened: false, isEmpowered: false, isContended: false, containsHiddenFractal: false, containsPublicFractal: false, hasMetaballEffect: false },
                 draggable: true
             };
             setNodes((nds) => [...nds, newNode]);
@@ -91,6 +92,7 @@ export function Editor() {
                 fitView
             >
                 <AtlasBackdrop src={`${import.meta.env.BASE_URL}BPLAtlas.png`} bounds={{ x0: -1000, y0: -800, x1: 1000, y1: 800 }} />
+                <MetaballLayer />
                 <Background />
                 <Controls />
                 <MiniMap />

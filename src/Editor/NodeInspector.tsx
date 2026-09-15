@@ -18,6 +18,7 @@ import {
 import { Cross2Icon, LockClosedIcon, LockOpen1Icon, TrashIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import type { AtlasNodeData } from "./AtlasData"
+import { DEFAULT_METABALL_COLOR, DEFAULT_METABALL_RADIUS } from "./MetaballLayer"
 
 interface NodeInspectorProps {
   node: Node<AtlasNodeData>
@@ -198,6 +199,53 @@ export function NodeInspector({ node, onChange, onClose }: NodeInspectorProps) {
                 </Text>
               </Flex>
             </Grid>
+          </Box>
+
+          <Separator size="4" />
+
+          {/* Effects */}
+          <Box>
+            <SectionLabel>Effects</SectionLabel>
+            <Flex direction="column" gap="3">
+              <Flex asChild gap="2" align="center">
+                <Text as="label" size="2">
+                  <Checkbox
+                    checked={!!data.hasMetaballEffect}
+                    onCheckedChange={(v) => update("hasMetaballEffect", !!v)}
+                  />
+                  Metaball glow
+                </Text>
+              </Flex>
+              {data.hasMetaballEffect && (
+                <Grid columns="2" gap="3">
+                  <Flex direction="column" gap="1">
+                    <Text size="1" color="gray">Color</Text>
+                    <input
+                      type="color"
+                      value={data.metaballColor ?? DEFAULT_METABALL_COLOR}
+                      onChange={(e) => update("metaballColor", e.target.value)}
+                      style={{
+                        width: "100%",
+                        height: "32px",
+                        padding: "2px",
+                        border: "1px solid var(--gray-a7)",
+                        borderRadius: "var(--radius-2)",
+                        background: "none",
+                      }}
+                    />
+                  </Flex>
+                  <Flex direction="column" gap="1">
+                    <Text size="1" color="gray">Radius</Text>
+                    <TextField.Root
+                      type="number"
+                      min="1"
+                      value={data.metaballRadius ?? DEFAULT_METABALL_RADIUS}
+                      onChange={(e) => update("metaballRadius", Number(e.target.value))}
+                    />
+                  </Flex>
+                </Grid>
+              )}
+            </Flex>
           </Box>
 
           {/* Empowerment uniques - only relevant once the node is actually
