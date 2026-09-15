@@ -20,7 +20,7 @@ export function AtlasNode({data, selected}: NodeProps<AtlasNode>) {
                 left: "-1px",
                 WebkitTextStroke: "1px black"
                 }}>{data.tier}</span>
-            <img src="/BlankMap.png" style={{ width: "78px", height: "78px", position: "absolute" }} />
+            <img src={`${import.meta.env.BASE_URL}BlankMap.png`} style={{ width: "78px", height: "78px", position: "absolute" }} />
         </div>
         <Handle type="source" position={Position.Bottom}/>
     </div>;

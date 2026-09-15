@@ -90,7 +90,7 @@ export function Editor() {
                 colorMode="dark"
                 fitView
             >
-                <AtlasBackdrop src="/BPLAtlas.png" bounds={{ x0: -1000, y0: -800, x1: 1000, y1: 800 }} />
+                <AtlasBackdrop src={`${import.meta.env.BASE_URL}BPLAtlas.png`} bounds={{ x0: -1000, y0: -800, x1: 1000, y1: 800 }} />
                 <Background />
                 <Controls />
                 <MiniMap />

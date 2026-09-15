@@ -312,7 +312,7 @@ export default function Atlas() {
                 <div style={{
                     transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.k})`,
                     transformOrigin: '0 0',
-                    backgroundImage: "url(/public/BPLAtlas.png)",
+                    backgroundImage: `url(${import.meta.env.BASE_URL}BPLAtlas.png)`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}>
