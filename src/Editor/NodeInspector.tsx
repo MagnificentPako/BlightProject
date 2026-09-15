@@ -136,7 +136,7 @@ export function NodeInspector({ node, onChange, onClose }: NodeInspectorProps) {
 
           {/* Rewards */}
           <Box>
-            <SectionLabel>Rewards</SectionLabel>
+            <SectionLabel>Objectives</SectionLabel>
             <Flex direction="column" gap="2">
               <Flex direction="column" gap="1">
                 <Text size="1" color="gray">Collection item</Text>
@@ -202,7 +202,7 @@ export function NodeInspector({ node, onChange, onClose }: NodeInspectorProps) {
 
           {/* Empowerment uniques - only relevant once the node is actually
               marked Empowered, so it stays out of the way otherwise. */}
-          {data.isEmpowered && (
+          {(
             <>
               <Separator size="4" />
               <Box>
